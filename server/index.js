@@ -19,10 +19,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Basic Route for testing
-app.get('/', (req, res) => {
-    res.send('API is running...');
-});
+const path = require('path');
+
+// Serve Frontend in Production
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+
+    // Any route that is not API will be redirected to index.html
+    app.get('*', (req, res) =>
+        res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'))
+    );
+} else {
+    app.get('/', (req, res) => {
+        res.send('API is running...');
+    });
+}
 
 // Use Routes
 app.use('/api/users', userRoutes);
