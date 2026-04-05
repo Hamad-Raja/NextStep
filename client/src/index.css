@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    /* Using hex values directly to avoid build-time class resolution errors */
+    @apply font-body antialiased overflow-x-hidden;
+    color: #1A1A1A;
+    background-color: #F9F9F9;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold tracking-tight;
+    color: #0A0A0A;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  .glass-dark {
+    @apply bg-black/30 backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+  .btn-luxury {
+    @apply relative overflow-hidden px-8 py-4 text-white font-bold tracking-widest uppercase text-xs transition-all duration-300 active:scale-95;
+    background-color: #0A0A0A;
+  }
+  .btn-luxury:hover {
+    background-color: #D4AF37;
+    color: #0A0A0A;
+  }
+  .btn-outline {
+    @apply px-8 py-4 border-2 font-bold tracking-widest uppercase text-xs transition-all duration-300 active:scale-95;
+    border-color: #0A0A0A;
+    color: #0A0A0A;
+  }
+  .btn-outline:hover {
+    background-color: #0A0A0A;
+    color: #ffffff;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r;
+  background-image: linear-gradient(to right, #0A0A0A, #1A1A1A, #D4AF37);
+}
+
+.reveal-anim {
+  animation: reveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
