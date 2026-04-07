@@ -21,6 +21,11 @@ app.use(cookieParser());
 
 const path = require('path');
 
+// Use Routes
+app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
+
 // Serve Frontend in Production
 if (process.env.NODE_ENV === 'production') {
     // Set static folder
@@ -35,11 +40,6 @@ if (process.env.NODE_ENV === 'production') {
         res.send('API is running...');
     });
 }
-
-// Use Routes
-app.use('/api/users', userRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/orders', orderRoutes);
 
 // Error Middleware
 app.use(notFound);
