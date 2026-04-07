@@ -4,5 +4,15 @@
   "scripts": {
     "postinstall": "cd server && npm install && cd ../client && npm install",
     "build": "cd client && npm run build"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.3"
   }
 }
