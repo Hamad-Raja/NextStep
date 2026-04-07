@@ -146,7 +146,7 @@ const Home = () => {
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-onyx"></div>
                 </div>
             ) : error ? (
-                <p className="text-red-500">Error loading products.</p>
+                <p className="text-red-500 overflow-hidden text-xs">Error: {error?.status} {JSON.stringify(error?.data || error)}</p>
             ) : products?.slice(0, 4).map((product) => (
               <motion.div 
                 key={product._id}
