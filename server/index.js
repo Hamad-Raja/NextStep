@@ -13,33 +13,38 @@ connectDB();
 
 const app = express();
 
+// CORS
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+  })
+);
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const path = require('path');
-
-// Use Routes
+// Routes
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 
-// Serve Frontend in Production
-if (process.env.NODE_ENV === 'production') {
-    // Set static folder
-    app.use(express.static(path.join(__dirname, '../client/dist')));
-
-    // Any route that is not API will be redirected to index.html
-    app.get('*', (req, res) =>
-        res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'))
-    );
-} else {
-    app.get('/', (req, res) => {
-        res.send('API is running...');
-    });
-}
+// Simple test route
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
 
 // Error Middleware
 app.use(notFound);
@@ -47,9 +52,6 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-// Vercel Serverless automatically exposes the app without listening to a bound PORT
-if (!process.env.VERCEL) {
-    app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
-}
-
-module.exports = app;
+app.listen(PORT, () =>
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+);
